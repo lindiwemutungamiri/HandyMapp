@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "360064540732",
+    "firebase_url": "https://handymapp-aa6d4-default-rtdb.firebaseio.com",
+    "project_id": "handymapp-aa6d4",
+    "storage_bucket": "handymapp-aa6d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360064540732:android:d25becd718bf8a12fe2339",
+        "android_client_info": {
+          "package_name": "com.example.flutter_handymappisioma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "360064540732-16953q3as5jf6u1a7uneiumo9ivu6u0e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_handymappisioma",
+            "certificate_hash": "c57b19a31806aeb50694d590b2b74ec2a5fe3f17"
+          }
+        },
+        {
+          "client_id": "360064540732-spve55aginfgu22m9u7gdtbcsog89o7p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb4OC9s2thuqQSSXC_eUflGQF3E6gcvTw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "360064540732-spve55aginfgu22m9u7gdtbcsog89o7p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
