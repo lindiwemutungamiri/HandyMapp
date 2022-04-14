@@ -1,37 +1,164 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_handymappisioma/services.dart';
-//
-// import 'bookservice.dart';
-//
-// class ServiceDetail extends StatelessWidget {
-//   final ServiceDataModel serviceDataModel;
-//
-//   const ServiceDetail({Key? key, required this.serviceDataModel})
-//       : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(serviceDataModel.name),
-//       ),
-//       body: Column(
-//         children: [
-//           SizedBox(
-//             height: 10,
-//           ),
-//           Text(
-//             serviceDataModel.desc,
-//             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-//           ),
-//           ElevatedButton(
-//               onPressed: () {
-//                 Navigator.push(context,
-//                     MaterialPageRoute(builder: (context) => ServiceProfile()));
-//               },
-//               child: Text("Location replacement")),
-//         ],
-//       ),
-//     );
-//   }
-// }
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_handymappisioma/services.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+
+import 'serviceprofile.dart';
+
+class ServiceDetail extends StatefulWidget {
+  final ServiceDataModel serviceDataModel;
+
+  ServiceDetail({Key? key, required this.serviceDataModel}) : super(key: key);
+
+  @override
+  State<ServiceDetail> createState() => _ServiceDetailState();
+}
+
+class _ServiceDetailState extends State<ServiceDetail> {
+  // Completer<GoogleMapController> _controller = Completer();
+  late GoogleMapController controller;
+
+  // late BitmapDescriptor sourceIcon;
+
+  // late BitmapDescriptor destinationIcon;
+
+  Set<Marker> _markers = Set<Marker>();
+
+  LatLng currentLocation = LatLng(5.6037, -0.1870);
+
+  LatLng destinationLocation = LatLng(5.6040, -0.1872);
+
+  double CAMERA_ZOOM = 16;
+  double CAMERA_TILT = 80;
+  double CAMERA_BEARING = 30;
+
+  CameraPosition initialCameraPosition = CameraPosition(
+      bearing: 30, target: LatLng(5.6037, -0.1870), tilt: 80, zoom: 16);
+  @override
+  void initState() {
+    super.initState();
+
+    // controller = await GoogleMapController.init(1, initialCameraPosition, )
+
+    this.getLocation();
+
+    //this.setSourceAndDestinationIcons();
+  }
+
+  // void setSourceAndDestinationIcons() async {
+  //   sourceIcon = await BitmapDescriptor.fromAssetImage(
+  //       ImageConfiguration(devicePixelRatio: 2.0), assetName);
+  //
+  //   destinationIcon = await BitmapDescriptor.fromAssetImage(
+  //       ImageConfiguration(devicePixelRatio: 2.0), assetName);
+  // }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.serviceDataModel.name),
+      ),
+      body: Column(
+        children: [
+          // SizedBox(
+          //   height: 50,
+          // ),
+          Text(
+            // widget.serviceDataModel.name,
+            'Select Carpenter',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+          // SizedBox(
+          //   child: ListView.builder(
+          //       itemCount: widget.serviceDataModel.workers.length,
+          //       itemBuilder: (context, index) =>
+          //           Text(widget.serviceDataModel.workers[index].phoneNumber)),
+          //   height: 10,
+          // ),
+          Expanded(
+            child: GoogleMap(
+                myLocationButtonEnabled: true,
+                compassEnabled: false,
+                tiltGesturesEnabled: false,
+                markers: _markers,
+                mapType: MapType.normal,
+                myLocationEnabled: true,
+                initialCameraPosition: initialCameraPosition,
+                onMapCreated: (GoogleMapController gcontroller) {
+                  setState(() {
+                    controller = gcontroller;
+
+                    showPinsOnMap();
+                  });
+                  // _controller.complete(gcontroller);
+                }),
+          ),
+          // ElevatedButton(
+          //     onPressed: () {
+          //       Navigator.push(context,
+          //           MaterialPageRoute(builder: (context) => ServiceProfile()));
+          //     },
+          //     child: Text("Location replacement")),
+        ],
+      ),
+    );
+  }
+
+  void showPinsOnMap() {
+    for (int index = 0;
+        index < widget.serviceDataModel.workers.length;
+        index++) {
+      _markers.add(Marker(
+          markerId: MarkerId(widget.serviceDataModel.workers[index].id),
+          position: widget.serviceDataModel.workers[index].location,
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ServiceProfile(
+                          worker: widget.serviceDataModel.workers[index],
+                        )));
+          }));
+    }
+    //_markers.add(Marker(markerId: MarkerId(widget.serviceDataModel.workers[index].location), position: currentLocation))
+  }
+
+  Future<void> getLocation() async {
+    Location location = new Location();
+
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _locationData = await location.getLocation();
+    // _locationData.longitude;
+    // _locationData.latitude;
+
+    setState(() {
+      currentLocation =
+          LatLng(_locationData.latitude ?? 0, _locationData.longitude ?? 0);
+
+      //  destinationLocation = LatLng(42.784927, -71.482578);
+    });
+    controller.animateCamera(CameraUpdate.newLatLng(currentLocation));
+  }
+}

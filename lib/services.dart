@@ -1,6 +1,8 @@
+import 'package:flutter_handymappisioma/worker.dart';
+
 class ServiceDataModel {
   final String name;
-  final List<Map<String, dynamic>> workers;
+  final List<Worker> workers;
 
   ServiceDataModel({
     required this.name,

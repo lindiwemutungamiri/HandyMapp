@@ -1,9 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_handymappisioma">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
    <application
         android:label="flutter_handymappisioma"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+       <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBTb2rzj9CxTkeg54VN8ig_1Z0PTEQqssE"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
