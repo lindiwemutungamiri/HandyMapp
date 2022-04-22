@@ -24,17 +24,8 @@ class _ServiceProfileState extends State<ServiceProfile> {
           children: <Widget>[
             const CircleAvatar(
               radius: 50.0,
-              backgroundImage: AssetImage('images/1761201.jpg'),
+              backgroundImage: AssetImage('images/hmlogo2.jpg'),
             ),
-            // const Text(
-            //   'Isioma Ekejiuba',
-            //   style: TextStyle(
-            //     fontFamily: 'Lobster',
-            //     fontSize: 30.0,
-            //     fontWeight: FontWeight.bold,
-            //     color: Colors.black,
-            //   ),
-            // ),
             Text(
               widget.worker.name,
               style: TextStyle(
@@ -54,11 +45,6 @@ class _ServiceProfileState extends State<ServiceProfile> {
                   _callNumber();
                 },
                 child: Text("Call")),
-            // const Text('isiomaekejiuba@yahoo.com',
-            //     style: TextStyle(
-            //         fontSize: 20,
-            //         fontWeight: FontWeight.bold,
-            //         color: Colors.black))
           ],
         ),
       ),

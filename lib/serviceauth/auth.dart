@@ -12,7 +12,6 @@ Future<User?> signUp(
 
   if (details.user != null) {
     User user = details.user!;
-    // await user.linkWithPhoneNumber(phoneNo);
     return user;
   }
 

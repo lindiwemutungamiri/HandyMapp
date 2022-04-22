@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
         builder: (context, snap) {
           if (snap.connectionState == ConnectionState.done) {
             return AnimatedSplashScreen(
-              splash: 'images/1761201.jpg',
+              splash: 'images/hmlogo2.jpg',
               nextScreen: SignIn(),
               splashTransition: SplashTransition.rotationTransition,
               // pageTransitionType: PageTransitionT.scale,

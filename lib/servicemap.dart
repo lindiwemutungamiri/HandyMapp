@@ -17,12 +17,7 @@ class ServiceDetail extends StatefulWidget {
 }
 
 class _ServiceDetailState extends State<ServiceDetail> {
-  // Completer<GoogleMapController> _controller = Completer();
   late GoogleMapController controller;
-
-  // late BitmapDescriptor sourceIcon;
-
-  // late BitmapDescriptor destinationIcon;
 
   Set<Marker> _markers = Set<Marker>();
 
@@ -39,21 +34,8 @@ class _ServiceDetailState extends State<ServiceDetail> {
   @override
   void initState() {
     super.initState();
-
-    // controller = await GoogleMapController.init(1, initialCameraPosition, )
-
     this.getLocation();
-
-    //this.setSourceAndDestinationIcons();
   }
-
-  // void setSourceAndDestinationIcons() async {
-  //   sourceIcon = await BitmapDescriptor.fromAssetImage(
-  //       ImageConfiguration(devicePixelRatio: 2.0), assetName);
-  //
-  //   destinationIcon = await BitmapDescriptor.fromAssetImage(
-  //       ImageConfiguration(devicePixelRatio: 2.0), assetName);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -63,21 +45,10 @@ class _ServiceDetailState extends State<ServiceDetail> {
       ),
       body: Column(
         children: [
-          // SizedBox(
-          //   height: 50,
-          // ),
           Text(
-            // widget.serviceDataModel.name,
-            'Select Carpenter',
+            'Select Worker Location',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
-          // SizedBox(
-          //   child: ListView.builder(
-          //       itemCount: widget.serviceDataModel.workers.length,
-          //       itemBuilder: (context, index) =>
-          //           Text(widget.serviceDataModel.workers[index].phoneNumber)),
-          //   height: 10,
-          // ),
           Expanded(
             child: GoogleMap(
                 myLocationButtonEnabled: true,
@@ -93,15 +64,8 @@ class _ServiceDetailState extends State<ServiceDetail> {
 
                     showPinsOnMap();
                   });
-                  // _controller.complete(gcontroller);
                 }),
           ),
-          // ElevatedButton(
-          //     onPressed: () {
-          //       Navigator.push(context,
-          //           MaterialPageRoute(builder: (context) => ServiceProfile()));
-          //     },
-          //     child: Text("Location replacement")),
         ],
       ),
     );
@@ -123,7 +87,6 @@ class _ServiceDetailState extends State<ServiceDetail> {
                         )));
           }));
     }
-    //_markers.add(Marker(markerId: MarkerId(widget.serviceDataModel.workers[index].location), position: currentLocation))
   }
 
   Future<void> getLocation() async {
@@ -150,14 +113,10 @@ class _ServiceDetailState extends State<ServiceDetail> {
     }
 
     _locationData = await location.getLocation();
-    // _locationData.longitude;
-    // _locationData.latitude;
 
     setState(() {
       currentLocation =
           LatLng(_locationData.latitude ?? 0, _locationData.longitude ?? 0);
-
-      //  destinationLocation = LatLng(42.784927, -71.482578);
     });
     controller.animateCamera(CameraUpdate.newLatLng(currentLocation));
   }
