@@ -1,4 +1,4 @@
-import 'package:flutter_handymappisioma/worker.dart';
+import 'worker.dart';
 
 class ServiceDataModel {
   final String name;

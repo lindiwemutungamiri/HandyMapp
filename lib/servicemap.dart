@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_handymappisioma/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 import 'serviceprofile.dart';
+import 'services.dart';
 
 class ServiceDetail extends StatefulWidget {
   final ServiceDataModel serviceDataModel;
@@ -42,6 +42,7 @@ class _ServiceDetailState extends State<ServiceDetail> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.serviceDataModel.name),
+        backgroundColor: Colors.purple,
       ),
       body: Column(
         children: [

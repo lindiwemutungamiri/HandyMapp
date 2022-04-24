@@ -1,9 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_handymappisioma/servicemap.dart';
-import 'package:flutter_handymappisioma/services.dart';
-import 'package:flutter_handymappisioma/worker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'servicemap.dart';
+import 'services.dart';
+import 'worker.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -52,31 +53,37 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Available Services'),
+        title: const Text('Available Services'),
+        backgroundColor: Colors.purple,
       ),
-      body: FutureBuilder<List<ServiceDataModel>>(
-          future: getData(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        title: Text(snapshot.data![index].name),
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ServiceDetail(
-                                    serviceDataModel: snapshot.data![index],
-                                  )));
-                        },
-                      ),
+      body: Center(
+        child: FutureBuilder<List<ServiceDataModel>>(
+            future: getData(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: ListTile(
+                          title: Text(snapshot.data![index].name),
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ServiceDetail(
+                                      serviceDataModel: snapshot.data![index],
+                                    )));
+                          },
+                        ),
+                      );
+                    }
+                    //add code here
+
                     );
-                  });
-            } else {
-              return CircularProgressIndicator();
-            }
-          }),
+              } else {
+                return CircularProgressIndicator();
+              }
+            }),
+      ),
     );
   }
 }

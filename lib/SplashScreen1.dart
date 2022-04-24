@@ -2,7 +2,8 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_handymappisioma/signin.dart';
+
+import './frontEnd/welcomeScreen/welcome_screen.dart';
 
 class MyApp extends StatefulWidget {
   @override
@@ -20,7 +21,8 @@ class _MyAppState extends State<MyApp> {
           if (snap.connectionState == ConnectionState.done) {
             return AnimatedSplashScreen(
               splash: 'images/hmlogo2.jpg',
-              nextScreen: SignIn(),
+              nextScreen: WelcomeScreen(),
+              // nextScreen: SignIn(),
               splashTransition: SplashTransition.rotationTransition,
               // pageTransitionType: PageTransitionT.scale,
             );

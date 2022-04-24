@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_handymappisioma/serviceauth/auth.dart';
-import 'package:flutter_handymappisioma/servicesmain.dart';
-import 'package:flutter_handymappisioma/signup.dart';
+import 'package:flutter_svg/svg.dart';
+
+import 'serviceauth/auth.dart';
+import 'servicesmain.dart';
+import 'signup.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -18,25 +20,38 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Sign In'),
+        backgroundColor: Colors.purple,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.all(60.0),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const SizedBox(height: 30),
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(),
-                  ),
+              //const SizedBox(height: 30),
+              SizedBox(
+                height: 100.0,
+                child: SvgPicture.asset(
+                  "images/icons/loginicon.svg",
+                  height: size.height * 0.45,
                 ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              TextField(
+                decoration: InputDecoration(
+                    contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                    hintText: "Email",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32.0))),
                 controller: email,
               ),
               const SizedBox(
@@ -46,22 +61,19 @@ class _SignInState extends State<SignIn> {
                 height: 10,
               ),
               TextField(
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(),
-                  ),
-                ),
+                decoration: InputDecoration(
+                    contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                    hintText: "Password",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32.0))),
                 controller: password,
                 obscureText: true,
               ),
               const SizedBox(
-                height: 10,
+                height: 40,
               ),
-              MaterialButton(
-                child: const Text('Next'),
-                color: Theme.of(context).primaryColor,
-                textColor: Colors.white,
+
+              ElevatedButton(
                 onPressed: () {
                   _formKey.currentState!.validate();
                   signIn(email: email.text, password: password.text)
@@ -72,17 +84,40 @@ class _SignInState extends State<SignIn> {
                     }
                   });
                 },
+                child: const Text('Login'),
+                style: ElevatedButton.styleFrom(
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
+                    primary: Colors.purple,
+                    padding: EdgeInsets.symmetric(horizontal: 67, vertical: 10),
+                    textStyle:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ),
-              Text("Don't have an account?"),
-              MaterialButton(
-                child: const Text('Sign Up'),
-                color: Theme.of(context).primaryColor,
-                textColor: Colors.white,
+
+              SizedBox(height: 16), //<----
+              const Text(
+                "Don't have an account?",
+                style: TextStyle(fontStyle: FontStyle.italic),
+              ),
+
+              SizedBox(height: 6),
+
+              ElevatedButton(
                 onPressed: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) => SignUp()));
                 },
-              )
+                child: const Text('Sign Up'),
+                style: ElevatedButton.styleFrom(
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
+                    primary: Colors.purple,
+                    padding: EdgeInsets.symmetric(horizontal: 67, vertical: 10),
+                    textStyle:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              ),
             ],
           ),
         ),
